@@ -1,0 +1,39 @@
+<mat-toolbar color="primary">
+  <span>Board List</span>
+</mat-toolbar>
+<button mat-button color="primary" (click)="addList()">
+  <mat-icon>add</mat-icon>Add list
+</button>
+<!-- <app-card *ngFor="let car of card" [card]="car"></app-card> -->
+<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)"
+  cdkDropListOrientation="horizontal">
+
+  <div class="card-list mat-elevation-z1" *ngFor="let track of tracks">
+
+    <h2 cdkDragHandle class="mat-h2">{{track.title}} <mat-icon color="warn" style="cursor: pointer;" (click)="deleteList(track.id)">delete</mat-icon></h2>
+
+    <div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks"
+      [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
+
+
+      <mat-card *ngFor="let card of track.tasks" cdkDrag>
+        <!-- Use the mat-card-content to add the proper spacing. -->
+        <mat-card-content>
+          <h2>{{card.title}}</h2>
+          <div>{{card.description}}</div>
+          <div> <button mat-icon-button color="primary" (click)="addCard(track.id, card)">
+              <mat-icon>edit</mat-icon>
+            </button> 
+            <button mat-icon-button color="warn" (click)="delete(track.id, card.id)">
+              <mat-icon>delete</mat-icon>
+            </button></div>
+        </mat-card-content>
+      </mat-card>
+      <button mat-button color="primary" (click)="addCard(track.id)">
+        <mat-icon>add</mat-icon>Add card
+      </button>
+    </div>
+
+  </div>
+
+</div>
